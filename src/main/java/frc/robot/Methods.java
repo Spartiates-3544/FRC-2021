@@ -5,11 +5,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 // Methods for operating different parts of the robot (Intake, Thrower, etc.)
 public class Methods {
-//Change this for speeds     
-double m_intakeSpeed = 0.5;
-double m_intakeArmSpeed = 0.125;
-double m_conveyorSpeed = 0.5;
-
 //Unless needed, don't touch anything from this point on (especially future me lol)
 private final WPI_VictorSPX m_intakeRoller = new WPI_VictorSPX(7);
 private final WPI_TalonSRX m_intakeArm = new WPI_TalonSRX(11);
@@ -19,9 +14,8 @@ private final WPI_TalonSRX m_shooter1 = new WPI_TalonSRX(12);
 private final WPI_TalonSRX m_shooter2 = new WPI_TalonSRX(13);
 
 
-
 //Intake Switch On
-public void IntakeOn() {
+public void IntakeOn(double m_intakeSpeed) {
      m_intakeRoller.set(m_intakeSpeed);
 }
 
@@ -30,19 +24,13 @@ public void IntakeOff() {
      m_intakeRoller.set(0);
 }
 
-//Intake arm switch up
-public void IntakeArmUp() {
-     m_intakeArm.set(m_intakeArmSpeed);
+//Intake arm throttle
+public void IntakeArmThrottle(double m_intakeArmThrottle) {
+     m_intakeArm.set(m_intakeArmThrottle);
 }
-
-//Intake arm switch down
-public void IntakeArmDown() {
-     m_intakeArm.set(-m_intakeArmSpeed);
-}
-
 
 //Conveyor switch on
-public void ConveyorOn() {
+public void ConveyorOn(double m_conveyorSpeed) {
      m_conveyorHigh.set(m_conveyorSpeed);
      m_conveyorLow.set(m_conveyorSpeed);
 }
@@ -54,9 +42,9 @@ public void ConveyorOff() {
 }
 
 //Thrower mechanism switch on
-public void ThrowerOn() {
-     m_shooter1.set(0.5);
-     m_shooter2.set(0.5);
+public void ThrowerOn(double m_throwerSpeed) {
+     m_shooter1.set(m_throwerSpeed);
+     m_shooter2.set(m_throwerSpeed);
 }
 
 //Thrower mechanism switch off

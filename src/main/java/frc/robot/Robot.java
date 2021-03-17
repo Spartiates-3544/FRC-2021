@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
   private final WPI_TalonFX m_rightMotor2 = new WPI_TalonFX(2);
   private final DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftMotor1, m_rightMotor1);
   private final Joystick m_stick = new Joystick(0);
-  private final Methods m_methods = new Methods();
+  private final Buttons m_buttons = new Buttons();
 
   // Setting the secondary motors to follow mode
   @Override
@@ -34,21 +34,24 @@ public class Robot extends TimedRobot {
   
   @Override
   public void teleopPeriodic() {
-  // Driving code starts from here:
-
     // Drive with arcade drive (Modified to use triggers for rotation)
     double leftTrigger = m_stick.getRawAxis(2);
     double rightTrigger = m_stick.getRawAxis(3);
     double rotation = rightTrigger - leftTrigger;
+
     m_robotDrive.arcadeDrive(-m_stick.getY() * 0.75, rotation * 0.75);
-    m_methods.IntakeArmDown();
-  }// To here.
+    m_buttons.IntakeArmButtons();
+    m_buttons.IntakeButtons();
+    m_buttons.ConveyorButtons();
+    m_buttons.ThrowerButtons();
+  }
 
 
   //Put any autonomous initialisation code here
   @Override
   public void autonomousInit() {
-    //This is code for importing Pathweaver JSONS into robot code (Change the trajectoryJSON string with the actual path to the JSON).
+    //This is code for importing Pathweaver JSONS into robot code (Change the trajectoryJSON string with the actual path to the JSON). 
+    //Path is from the perspective of the roboRIO
     String trajectoryJSON = "paths/YourPath.wpilib.json";
     Trajectory trajectory = new Trajectory();
     try {
@@ -60,7 +63,7 @@ public class Robot extends TimedRobot {
   }
  
  
- //Code to run every loop
+ //Code to run every loop in autonomous
   @Override
   public void autonomousPeriodic() {
     
