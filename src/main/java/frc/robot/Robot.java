@@ -6,6 +6,7 @@ package frc.robot;
 
 //import edu.wpi.first.wpilibj.Joystick;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 //import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.trajectory.*;
@@ -47,7 +48,7 @@ public class Robot extends TimedRobot {
   //Put any autonomous initialisation code here
   @Override
   public void autonomousInit() {
-    //This is code for importing Pathweaver JSONS into robot code (Change the trajectoryJSON string with the actual path to the JSON)
+    //This is code for importing Pathweaver JSONS into robot code (Change the trajectoryJSON string with the actual path to the JSON).
     String trajectoryJSON = "paths/YourPath.wpilib.json";
     Trajectory trajectory = new Trajectory();
     try {
