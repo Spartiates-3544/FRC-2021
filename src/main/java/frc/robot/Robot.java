@@ -28,8 +28,7 @@ public class Robot extends TimedRobot {
   // Setting the secondary motors to follow mode
   @Override
   public void robotInit() {
-    m_leftMotor2.follow(m_leftMotor1);
-    m_rightMotor2.follow(m_rightMotor1); 
+ 
   }
   
   @Override
@@ -39,7 +38,10 @@ public class Robot extends TimedRobot {
     double rightTrigger = m_stick.getRawAxis(3);
     double rotation = rightTrigger - leftTrigger;
 
-    m_robotDrive.arcadeDrive(-m_stick.getY() * 0.75, rotation * 0.75);
+    m_leftMotor2.follow(m_leftMotor1);
+    m_rightMotor2.follow(m_rightMotor1);
+    
+    m_robotDrive.arcadeDrive(-m_stick.getY() * 1, m_stick.getX() * 1);
     m_buttons.IntakeArmButtons();
     m_buttons.IntakeButtons();
     m_buttons.ConveyorButtons();

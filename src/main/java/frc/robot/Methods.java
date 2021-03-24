@@ -31,7 +31,7 @@ public void IntakeArmThrottle(double m_intakeArmThrottle) {
 
 //Conveyor switch on
 public void ConveyorOn(double m_conveyorSpeed) {
-     m_conveyorHigh.set(m_conveyorSpeed);
+     m_conveyorHigh.set(-m_conveyorSpeed);
      m_conveyorLow.set(m_conveyorSpeed);
 }
 
