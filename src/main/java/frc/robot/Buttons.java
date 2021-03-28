@@ -54,7 +54,7 @@ public class Buttons {
     //Conveyor button code
     public void ConveyorButtons() {
         if (m_stick.getRawButton(Y)) {
-            m_methods.ConveyorOn(0.25);
+            m_methods.ConveyorOn(0.50);
         } else {
             m_methods.ConveyorOff();
         }
@@ -63,7 +63,7 @@ public class Buttons {
     //Thrower button code
     public void ThrowerButtons() {
         if (m_stick.getRawButton(B)) {
-            m_methods.ThrowerOn(0.75);
+            m_methods.ThrowerOn(0.50);
         } else {
             m_methods.ThrowerOff();
         }
