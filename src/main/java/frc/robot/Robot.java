@@ -6,7 +6,6 @@ package frc.robot;
 
 //import edu.wpi.first.wpilibj.Joystick;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
 //import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.trajectory.*;
@@ -28,18 +27,19 @@ public class Robot extends TimedRobot {
   // Setting the secondary motors to follow mode
   @Override
   public void robotInit() {
-    m_leftMotor2.follow(m_leftMotor1);
-    m_rightMotor2.follow(m_rightMotor1); 
+
   }
   
   @Override
   public void teleopPeriodic() {
-    // Drive with arcade drive (Modified to use triggers for rotation)
+    m_leftMotor2.follow(m_leftMotor1);
+    m_rightMotor2.follow(m_rightMotor1); 
+    // Drive with arcade drive (Modified for reversed rocket league style controls)
     double leftTrigger = m_stick.getRawAxis(2);
     double rightTrigger = m_stick.getRawAxis(3);
     double rotation = rightTrigger - leftTrigger;
 
-    m_robotDrive.arcadeDrive(-m_stick.getY() * 0.75, rotation * 0.75);
+    m_robotDrive.arcadeDrive(-m_stick.getX() * 0.75, rotation * 0.75);
     m_buttons.IntakeArmButtons();
     m_buttons.IntakeButtons();
     m_buttons.ConveyorButtons();

@@ -6,10 +6,10 @@ import edu.wpi.first.wpilibj.Joystick;
 public class Buttons {
     private final Joystick m_stick = new Joystick(0);
     private final Methods m_methods = new Methods();
-    private int A = 1;
-    private int B = 2;
-    private int X = 3;
-    private int Y = 4;
+    private static final int A = 1;
+    private static final int B = 2;
+    private static final int X = 3;
+    private static final int Y = 4;
 
     //Intake button code
     public void IntakeButtons() {

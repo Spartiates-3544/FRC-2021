@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.controller.PIDController;
 
 // Methods for operating different parts of the robot (Intake, Thrower, etc.)
 public class Methods {
@@ -13,6 +14,11 @@ private final WPI_VictorSPX m_conveyorHigh = new WPI_VictorSPX(9);
 private final WPI_TalonSRX m_shooter1 = new WPI_TalonSRX(12);
 private final WPI_TalonSRX m_shooter2 = new WPI_TalonSRX(13);
 
+//PID controller for shooter
+// private static final double kP = -.075;
+// private static final double kI = -0.00;
+// private static final double kD = -0.0;
+// PIDController shooter_pid = new PIDController(kP, kI, kD); 
 
 //Intake Switch On
 public void IntakeOn(double m_intakeSpeed) {
