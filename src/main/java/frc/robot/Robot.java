@@ -62,13 +62,12 @@ public class Robot extends TimedRobot {
     }
   }
  
- 
- //Code to run every loop in autonomous
+
   @Override
   public void autonomousPeriodic() {
-    
-  }
 
+  }
+ 
 
 }
 

@@ -14,6 +14,9 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Methods;
 
 public class DriveSubsystem extends SubsystemBase {
+
+  private final WPI_TalonFX leftmotor = new WPI_TalonFX(3);
+  private final WPI_TalonFX rightmotor = new WPI_TalonFX(1);
   // The motors on the left side of the drive.
   private final SpeedControllerGroup m_leftMotors =
       new SpeedControllerGroup(new WPI_TalonFX(DriveConstants.kLeftMotor1Port),
@@ -27,16 +30,6 @@ public class DriveSubsystem extends SubsystemBase {
   // The robot's drive
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
-  // The left-side drive encoder
-  private final Encoder m_leftEncoder =
-      new Encoder(DriveConstants.kLeftEncoderPorts[0], DriveConstants.kLeftEncoderPorts[1],
-                  DriveConstants.kLeftEncoderReversed);
-
-  // The right-side drive encoder
-  private final Encoder m_rightEncoder =
-      new Encoder(DriveConstants.kRightEncoderPorts[0], DriveConstants.kRightEncoderPorts[1],
-                  DriveConstants.kRightEncoderReversed);
-
   // The gyro sensor
   private final Gyro m_gyro = new ADXRS450_Gyro();
 
@@ -47,9 +40,6 @@ public class DriveSubsystem extends SubsystemBase {
    * Creates a new DriveSubsystem.
    */
   public DriveSubsystem() {
-    // Sets the distance per pulse for the encoders
-    m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
-    m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
 
     resetEncoders();
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
@@ -76,8 +66,20 @@ public class DriveSubsystem extends SubsystemBase {
    *
    * @return The current wheel speeds.
    */
+  final int kUnitsPerRevolution = 2048; /* this is constant for Talon FX */
+  double selSenPos = leftmotor.getSelectedSensorPosition(); /* position units */
+  double selSenVel = leftmotor.getSelectedSensorVelocity(); /* position units per 100ms */
+  double vel_RotPerSec = (double) selSenVel / kUnitsPerRevolution * 10; /* scale per100ms to perSecond */
+  double vel_RotPerMin = vel_RotPerSec * 60.0;
+  double vel_mpersleft = (vel_RotPerMin * 0.475) / 60;
+
+  double selSenPosr = rightmotor.getSelectedSensorPosition(); /* position units */
+  double selSenVelr = rightmotor.getSelectedSensorVelocity(); /* position units per 100ms */
+  double vel_RotPerSecr = (double) selSenVelr / kUnitsPerRevolution * 10; /* scale per100ms to perSecond */
+  double vel_RotPerMinr = vel_RotPerSecr * 60.0;
+  double vel_mpersright = (vel_RotPerMinr * 0.475) / 60;
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
+    return new DifferentialDriveWheelSpeeds(vel_mpersleft, vel_mpersright);
   }
 
   /**
@@ -116,8 +118,8 @@ public class DriveSubsystem extends SubsystemBase {
    * Resets the drive encoders to currently read a position of 0.
    */
   public void resetEncoders() {
-    m_leftEncoder.reset();
-    m_rightEncoder.reset();
+    rightmotor.setSelectedSensorPosition(0);
+    leftmotor.setSelectedSensorPosition(0);
   }
 
   /**
