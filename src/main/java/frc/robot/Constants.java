@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalSource;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
 /**
@@ -18,8 +19,12 @@ public final class Constants {
         public static final int kLeftMotor2Port = 4;
         public static final int kRightMotor1Port = 1;
         public static final int kRightMotor2Port = 2;
-    
-    
+        public static boolean kLeftEncoderReversed = false;
+        public static boolean kRightEncoderReversed = true;
+        public static final int[] kLeftEncoderPorts = new int[] {3, 4};
+        public static final int[] kRightEncoderPorts = new int[] {1, 2};
+        public static final  double kEncoderDistancePerPulse = 0.69;
+		
         //TODO CHANGE THESE VALUES, THESE ARE EXAMPLE VALUES FROM https://docs.wpilib.org/en/stable/docs/software/examples-tutorials/trajectory-tutorial/entering-constants.html
         public static final double ksVolts = 0.22;
         public static final double kvVoltSecondsPerMeter = 1.98;

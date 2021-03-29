@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.controller.PIDController;
 
+//cral
 // Methods for operating different parts of the robot (Intake, Thrower, etc.)
 public class Methods {
 //Unless needed, don't touch anything from this point on (especially future me lol)
