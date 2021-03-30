@@ -1,17 +1,14 @@
 package edu.wpi.first.wpilibj.examples.ramsetecommand.subsystems;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.Encoder;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Methods;
+import com.analog.adis16448.frc.ADIS16448_IMU;
 
 public class DriveSubsystem extends SubsystemBase {
 
@@ -31,7 +28,7 @@ public class DriveSubsystem extends SubsystemBase {
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
   // The gyro sensor
-  private final Gyro m_gyro = new ADXRS450_Gyro();
+  public static final ADIS16448_IMU m_gyro = new ADIS16448_IMU();
 
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;
@@ -48,8 +45,8 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getDistance(),
-                      m_rightEncoder.getDistance());
+    m_odometry.update(m_gyro.getRotation2d(), getLeftDistance(),
+                      getRightDistance());
   }
 
   /**
@@ -127,10 +124,20 @@ public class DriveSubsystem extends SubsystemBase {
    *
    * @return the average of the two encoder readings
    */
+    // This double method returns the distance travelled by the left side of the drivetrain
+    public double getLeftDistance () {
+      return 0.475 * (leftmotor.getSelectedSensorPosition() / 20992);
+    }
+  
+    // This double method returns the distance travelled by the right side of the drivetrain
+    public double getRightDistance () {
+      return 0.475 * (rightmotor.getSelectedSensorPosition() / 20992);
+    }
+
 
 
   public double getAverageEncoderDistance() {
-    return (m_leftEncoder.getDistance() + m_rightEncoder.getDistance()) / 2.0;
+    return (getLeftDistance() + getRightDistance()) / 2.0;
   }
 
   /**
@@ -138,8 +145,8 @@ public class DriveSubsystem extends SubsystemBase {
    *
    * @return the left drive encoder
    */
-  public Encoder getLeftEncoder() {
-    return m_leftEncoder;
+  public Double getLeftEncoder() {
+    return leftmotor.getSelectedSensorPosition();
   }
 
   /**
@@ -147,8 +154,8 @@ public class DriveSubsystem extends SubsystemBase {
    *
    * @return the right drive encoder
    */
-  public Encoder getRightEncoder() {
-    return m_rightEncoder;
+  public Double getRightEncoder() {
+    return rightmotor.getSelectedSensorPosition();
   }
 
   /**

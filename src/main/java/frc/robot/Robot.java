@@ -8,10 +8,13 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 //import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.examples.ramsetecommand.RobotContainer;
 import edu.wpi.first.wpilibj.trajectory.*;
 import java.nio.file.*;
 import edu.wpi.first.wpilibj.*;
 import java.io.*;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 //TODO REMOVE .* LIBRARIES & FIND THE ACTUAL GOOD ONES
 
 
@@ -23,13 +26,28 @@ public class Robot extends TimedRobot {
   private final DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftMotor1, m_rightMotor1);
   private final Joystick m_stick = new Joystick(0);
   private final Buttons m_buttons = new Buttons();
+  private Command m_autonomousCommand;
+  private RobotContainer m_robotContainer;
 
-  // Setting the secondary motors to follow mode
   @Override
-  public void robotInit() {
-
+  public void robotPeriodic() {
+    // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
+    // commands, running already-scheduled commands, removing finished or interrupted commands,
+    // and running subsystem periodic() methods.  This must be called from the robot's periodic
+    // block in order for anything in the Command-based framework to work.
+    CommandScheduler.getInstance().run();
   }
-  
+
+
+
+  @Override
+  public void teleopInit() {
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
+    }
+  }
+
+
   @Override
   public void teleopPeriodic() {
     m_leftMotor2.follow(m_leftMotor1);
@@ -39,7 +57,7 @@ public class Robot extends TimedRobot {
     double rightTrigger = m_stick.getRawAxis(3);
     double rotation = rightTrigger - leftTrigger;
 
-    m_robotDrive.arcadeDrive(-m_stick.getX() * 0.75, rotation * 0.75);
+    m_robotDrive.arcadeDrive(-m_stick.getY() * 0.75, rotation * 0.75);
     m_buttons.IntakeArmButtons();
     m_buttons.IntakeButtons();
     m_buttons.ConveyorButtons();
@@ -50,18 +68,16 @@ public class Robot extends TimedRobot {
   //Put any autonomous initialisation code here
   @Override
   public void autonomousInit() {
-    //This is code for importing Pathweaver JSONS into robot code (Change the trajectoryJSON string with the actual path to the JSON). 
-    //Path is from the perspective of the roboRIO
-    String trajectoryJSON = "paths/YourPath.wpilib.json";
-    Trajectory trajectory = new Trajectory();
-    try {
-      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-    } catch (IOException ex) {
-      DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
     }
+
   }
+  
  
+  
 
   @Override
   public void autonomousPeriodic() {

@@ -1,6 +1,5 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DigitalSource;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
 /**
@@ -26,18 +25,18 @@ public final class Constants {
         public static final  double kEncoderDistancePerPulse = 0.69;
 		
         //TODO CHANGE THESE VALUES, THESE ARE EXAMPLE VALUES FROM https://docs.wpilib.org/en/stable/docs/software/examples-tutorials/trajectory-tutorial/entering-constants.html
-        public static final double ksVolts = 0.22;
+        public static final double ksVolts = 0.642;
         public static final double kvVoltSecondsPerMeter = 1.98;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.2;
-        public static final double kPDriveVel = 8.5;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.00926;
+        public static final double kPDriveVel = 0.406;
 
         //UNITS IN METERS
-        public static final double kTrackwidthMeters = 0.69;
+        public static final double kTrackwidthMeters = 0.6858;
         public static final DifferentialDriveKinematics kDriveKinematics =
             new DifferentialDriveKinematics(kTrackwidthMeters);
 
-        public static final double kMaxSpeedMetersPerSecond = 3;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+        public static final double kMaxSpeedMetersPerSecond = 0.5;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 0.25;
         
         	
         //RAMSETE constants
