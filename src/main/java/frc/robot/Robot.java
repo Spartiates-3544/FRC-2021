@@ -40,6 +40,23 @@ public class Robot extends TimedRobot {
 
 
 
+  //Put any autonomous initialisation code here
+  @Override
+  public void autonomousInit() {
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+  
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
+    }
+  
+    }
+
+
+  @Override
+  public void robotInit() {
+    m_robotContainer = new RobotContainer();
+  }
+
   @Override
   public void teleopInit() {
     if (m_autonomousCommand != null) {
@@ -63,21 +80,6 @@ public class Robot extends TimedRobot {
     m_buttons.ConveyorButtons();
     m_buttons.ThrowerButtons();
   }
-
-
-  //Put any autonomous initialisation code here
-  @Override
-  public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
-
-  }
-  
- 
-  
 
   @Override
   public void autonomousPeriodic() {
