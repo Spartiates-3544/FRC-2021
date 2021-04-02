@@ -9,10 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 //import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.examples.ramsetecommand.RobotContainer;
-import edu.wpi.first.wpilibj.trajectory.*;
-import java.nio.file.*;
 import edu.wpi.first.wpilibj.*;
-import java.io.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 //TODO REMOVE .* LIBRARIES & FIND THE ACTUAL GOOD ONES
