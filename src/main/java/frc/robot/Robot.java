@@ -72,7 +72,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    // Drive with arcade drive (Modified for reversed rocket league style controls)
+    // Drive with arcade drive (Modified for reversed rocket league style controls (e.g triggers for rotation, Y axis of stick for acceleration))
     double leftTrigger = m_stick.getRawAxis(2);
     double rightTrigger = m_stick.getRawAxis(3);
     double rotation = rightTrigger - leftTrigger;

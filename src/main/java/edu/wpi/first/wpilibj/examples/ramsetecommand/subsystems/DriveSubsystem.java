@@ -66,7 +66,8 @@ public class DriveSubsystem extends SubsystemBase {
    * @return The current wheel speeds.
    */
   //TODO Change kUnitsPerRevolution?
-  final int kUnitsPerRevolution = 2048; /* this is constant for Talon FX */
+  //Talon FX Default = 2048
+  final int kUnitsPerRevolution = 20992;
   double selSenPos = leftmotor.getSelectedSensorPosition(); /* position units */
   double selSenVel = leftmotor.getSelectedSensorVelocity(); /* position units per 100ms */
   double vel_RotPerSec = (double) selSenVel / kUnitsPerRevolution * 10; /* scale per100ms to perSecond */
