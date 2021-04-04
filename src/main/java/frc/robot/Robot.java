@@ -12,15 +12,20 @@ import edu.wpi.first.wpilibj.examples.ramsetecommand.RobotContainer;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-//TODO REMOVE .* LIBRARIES & FIND THE ACTUAL GOOD ONES
-
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 public class Robot extends TimedRobot {
-  private final WPI_TalonFX m_leftMotor1 = new WPI_TalonFX(3);
-  private final WPI_TalonFX m_rightMotor1 = new WPI_TalonFX(1);
-  private final WPI_TalonFX m_leftMotor2 = new WPI_TalonFX(4);
-  private final WPI_TalonFX m_rightMotor2 = new WPI_TalonFX(2);
-  private final DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftMotor1, m_rightMotor1);
+
+  //Speed Controller Groups (For motors/DifferentialDrive)
+  private final SpeedControllerGroup m_leftMotors =
+      new SpeedControllerGroup(new WPI_TalonFX(3),
+                               new WPI_TalonFX(4));
+
+  private final SpeedControllerGroup m_rightMotors =
+      new SpeedControllerGroup(new WPI_TalonFX(1),
+                               new WPI_TalonFX(2));
+
+  private final DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftMotors, m_rightMotors);
   private final Joystick m_stick = new Joystick(0);
   private final Buttons m_buttons = new Buttons();
   private Command m_autonomousCommand;
@@ -41,7 +46,10 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-  
+    
+    
+    //TODO IF NEEDED ONLY
+    //m_robotDrive.setSafetyEnabled(false);
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
@@ -64,14 +72,14 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    m_leftMotor2.follow(m_leftMotor1);
-    m_rightMotor2.follow(m_rightMotor1); 
+
     // Drive with arcade drive (Modified for reversed rocket league style controls)
     double leftTrigger = m_stick.getRawAxis(2);
     double rightTrigger = m_stick.getRawAxis(3);
     double rotation = rightTrigger - leftTrigger;
 
     m_robotDrive.arcadeDrive(-m_stick.getY() * 0.75, rotation * 0.75);
+    m_robotDrive.feed();
     m_buttons.IntakeArmButtons();
     m_buttons.IntakeButtons();
     m_buttons.ConveyorButtons();
@@ -85,6 +93,3 @@ public class Robot extends TimedRobot {
  
 
 }
-
-
-//2021 cral & bob inc.

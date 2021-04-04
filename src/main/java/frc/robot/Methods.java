@@ -3,10 +3,9 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-//cral
 // Methods for operating different parts of the robot (Intake, Thrower, etc.)
 public class Methods {
-//Unless needed, don't touch anything from this point on (especially future me lol)
+
 private final WPI_VictorSPX m_intakeRoller = new WPI_VictorSPX(7);
 private final WPI_TalonSRX m_intakeArm = new WPI_TalonSRX(11);
 private final WPI_VictorSPX m_conveyorLow = new WPI_VictorSPX(8);
