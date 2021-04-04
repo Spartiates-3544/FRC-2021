@@ -9,7 +9,6 @@ import frc.robot.Constants.*;
 import edu.wpi.first.wpilibj.examples.ramsetecommand.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,7 +44,7 @@ public class RobotContainer {
             // Apply the voltage constraint
             .addConstraint(autoVoltageConstraint);
 
-
+    //Code for importing Pathweaver JSONs into robot code
     String trajectoryJSON = "paths/Unnamed.wpilib.json";
     Trajectory trajectory = new Trajectory();
     if (gamer) {
